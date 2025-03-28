@@ -60,14 +60,17 @@ app.get("/messages", (req, res) => {
 app.post("/messages", (req, res) => {
   const dataMessage = req.body;
 
-  if (!dataMessage.message) {
-    return res.status(400).send({ message: "All fields are required" });
+  if (!dataMessage.message || !dataMessage.username) {
+    return res
+      .status(400)
+      .send({ message: "Username and message are required" });
   }
 
   const messageId = Math.floor(Math.random() * 1000000);
 
   const newMessage = {
     id: messageId,
+    username: dataMessage.username,
     message: dataMessage.message,
   };
 
